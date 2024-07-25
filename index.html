@@ -12,5 +12,40 @@
         <li><a href="./recipes/ceviche.html"> Ceviche</a></li>
         <li><a href="./recipes/paella.html"> Paella</a></li>
     </ul>
+    <input type="number" id="userInput" placeholder="Enter a number">
+    <button onclick="getUserInput()">Submit</button>
+    <div id="output"></div>
+    <script>
+        function print_numbers(number) {
+            const outputDiv = document.getElementById('output');
+            outputDiv.innerHTML = ''; // Clear previous output
+            for (let i = 1; i <= number; i++) {
+                let text;
+                if (i % 3 === 0 && i % 5 === 0) {
+                    text = "FizzBuzz";
+                } else if (i % 3 === 0) {
+                    text = "Fizz..." + i;
+                } else if (i % 5 === 0) {
+                    text = "Buzz......." + i;
+                } else {
+                    text = i;
+                }
+                const p = document.createElement('p');
+                p.textContent = text;
+                outputDiv.appendChild(p);
+            }
+        }
+
+        function getUserInput() {
+            //const userInput = document.getElementById('userInput').value;
+            let userInput = parseInt(prompt("Please enter the number you would like to FizzBuzz up to: "));
+            const number = parseInt(userInput);
+            if (!isNaN(number)) {
+                print_numbers(number);
+            } else {
+                console.log("Please enter a valid number");
+            }
+        }
+    </script>
 </body>
 </html>
