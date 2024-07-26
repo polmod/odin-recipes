@@ -6,15 +6,21 @@
     <title>Document</title>
 </head>
 <body>
-    <h1>Odin Recipes</h1>
+    <h3>Odin Recipes</h3>
     <ul>
         <li><a href="./recipes/cachapas.html"> Cachapas</a></li>
         <li><a href="./recipes/ceviche.html"> Ceviche</a></li>
         <li><a href="./recipes/paella.html"> Paella</a></li>
     </ul>
+    <h3>FizzBuzz</h3>
     <input type="number" id="userInput" placeholder="Enter a number">
     <button onclick="getUserInput()">Submit</button>
     <div id="output"></div>
+
+    <h3>Rock Paper Scissors</h3>
+    <button onclick="playRPS()">Play game</button>
+    <button onclick="autoplayRPS()">Auto play</button>
+    <div id="outputRPS"></div>
     <script>
         function print_numbers(number) {
             const outputDiv = document.getElementById('output');
@@ -46,6 +52,69 @@
                 console.log("Please enter a valid number");
             }
         }
+    
+        let userScore = 0;
+        let computerScore = 0;
+        let tieScore = 0;
+        
+        function createAndAppendElement(parent, textContent) {
+            const element = document.createElement('p');
+            element.textContent = textContent;
+            parent.appendChild(element);
+         }
+
+        function playRPS(myChoice=null) {
+            const outputDiv = document.getElementById("outputRPS");
+            outputDiv.innerHTML = '';
+            let outcomeText;
+            const choices = ["r", "p", "s"];
+            const randomNumber = Math.random()
+            const roundedNumber = Math.round(randomNumber * 1000) / 1000;
+            const randomIndex = Math.floor(roundedNumber * choices.length);
+            const computerChoice = choices[randomIndex];
+            let userChoice;
+            if (myChoice === null) {
+                userChoice = prompt("Please enter your choice: rock (r), paper (p), or scissors (s)");
+            } else {
+                userChoice = myChoice;
+            }
+            if (!choices.includes(userChoice)){
+                outcomeText = "Invalid input, please enter r, p or s"
+            }
+            else {
+                if (userChoice === computerChoice) {
+                    outcomeText = "It's a tie!";
+                    tieScore++;
+                } else if (userChoice === "r" && computerChoice === "s" ||
+                userChoice === "p" && computerChoice === "r" ||
+                userChoice === "s" && computerChoice === "p") {
+                    outcomeText = "You win!";
+                    userScore++;
+                } else {
+                    outcomeText = "You lose!";
+                    computerScore++;
+                }
+            }
+            createAndAppendElement(outputDiv, outcomeText);
+            createAndAppendElement(outputDiv, "The computer chose " + computerChoice + ` (${roundedNumber} - ${randomIndex})`);
+            createAndAppendElement(outputDiv, "The user chose " + userChoice);
+            createAndAppendElement(outputDiv, `User score is: ${userScore}`);
+            createAndAppendElement(outputDiv, `Computer score is: ${computerScore}`);
+            createAndAppendElement(outputDiv, `Total ties: ${tieScore}`);
+            createAndAppendElement(outputDiv, `Total games played: ${userScore + computerScore + tieScore}`);
+            createAndAppendElement(outputDiv, `User win rate: ${Math.round(userScore / (userScore + computerScore + tieScore) * 100)}%`);
+
+        }
+    
+        function autoplayRPS() {
+            times = prompt("Please enter the number of times you would like to play: ");
+            times = parseInt(times);
+            myChoice = prompt("Please enter your choice: rock (r), paper (p), or scissors (s)");
+            for (let i = 0; i < times; i++) {
+                playRPS(myChoice);
+            }
+        }
+    
     </script>
 </body>
 </html>
